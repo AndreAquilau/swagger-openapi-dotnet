@@ -1,0 +1,103 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "ToDo API",
+    "description": "An ASP.NET Core Web API for managing ToDo items",
+    "termsOfService": "https://example.com/terms",
+    "contact": {
+      "name": "Contact",
+      "url": "https://example.com/contact"
+    },
+    "license": {
+      "name": "License",
+      "url": "https://example.com/license"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Cliente": {
+      "get": {
+        "tags": [
+          "Cliente"
+        ],
+        "summary": "Consulta cliente por ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Id do cliente exemplo: 1",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta Cliente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseCliente"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cliente não encontrado"
+          },
+          "500": {
+            "description": "Oops! Não é possível pesquisar seu cliente no momento"
+          },
+          "503": {
+            "description": "Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponseCliente": {
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "ID do cliente",
+            "format": "int32",
+            "example": 10
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do cliente",
+            "nullable": true,
+            "example": "Andre"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descrição do cliente",
+            "nullable": true,
+            "example": "Mora no Brasil"
+          },
+          "tipoPessoa": {
+            "$ref": "#/components/schemas/ETipoPessoa"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ETipoPessoa": {
+        "enum": [
+          1,
+          2
+        ],
+        "type": "integer",
+        "description": "Tipo do Cliente: 1 - Fisica, 2 - Juridica",
+        "format": "int32"
+      }
+    }
+  }
+}
